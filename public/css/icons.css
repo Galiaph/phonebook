@@ -1,0 +1,157 @@
+i.glyphicon-envelope,
+i.glyphicon-phone,
+i.glyphicon-facetime-video,
+i.glyphicon-phone-alt,
+i.glyphicon-info-sign,
+i.glyphicon-exclamation-sign,
+i.glyphicon-trash,
+i.glyphicon-refresh,
+i.glyphicon-new-window {
+    color: #ADF;
+}
+i.glyphicon-envelope:hover,
+i.glyphicon-facetime-video:hover,
+i.glyphicon-info-sign:hover,
+i.glyphicon-exclamation-sign:hover,
+i.glyphicon-trash:hover,
+i.glyphicon-refresh:hover,
+i.glyphicon-new-window:hover{
+    color: #08C;
+}
+span.inline:not(:empty):before {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+span.inline.url:not(:empty):before,
+/*span.inline.email:not(:empty):before,*/
+/*span.inline.vconf:not(:empty):before,*/
+/*span.inline.phone:not(:empty):before,*/
+span.inline.phone-alt:not(:empty):before {
+    padding-right: 5px;
+    font-size: 100%;
+    color: #9acfea;
+}
+span.inline.url:not(:empty):before {
+    content: "\e164";
+}
+span.inline.phone-alt:not(:empty):before {
+    content: "\e183";
+}
+i.glyphicon-envelope {
+    font-size: 14px;
+}
+div.card .btn-report {
+    display: none;
+    float: right;
+    position: relative;
+}
+div.card:hover .btn-report {
+    display: block;
+}
+@media (max-width: 540px) {
+    div.card .btn-report {
+        display: none; !important
+    }
+    div.card:hover .btn-report {
+        display: none; !important
+    }
+}
+i.skype {
+    opacity: 0.5;
+    display: inline-block;
+    width: 16px;
+    /*background: url("../../skype_icon_16px.png") no-repeat left 4px;*/
+}
+div.card.sk:not(.exp) i.skype {
+    background: url("../../skype_icon_16px.png") no-repeat 2px;
+}
+i.skype:before {
+    content: ".";
+    opacity: 0;
+}
+i.skype:hover {
+    opacity: 1;
+}
+i.skype-biz {
+    opacity: 0.5;
+    display: inline-block;
+    width: 16px;
+    background: url("../../skype_biz_icon_16px.png") no-repeat left 3px;
+}
+i.skype-biz:before {
+    content: ".";
+    opacity: 0;
+}
+div.card span.email:not(.inline):before {
+    color: #9acfea;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+}
+div.card.vc:not(.exp):not(.sk):not(.mo) span.email:not(.inline),
+div.card.sk:not(.exp):not(.vc):not(.mo) span.email:not(.inline),
+div.card.mo:not(.exp):not(.vc):not(.sk) span.email:not(.inline) {
+    margin-left: -18px;
+    /*0*/
+}
+div.card:not(.eml):not(.edit) span.email {
+    display: none; !important;
+}
+
+@media (max-width: 768px) {
+    div.card:not(.eml):not(.edit) span.email {
+        display: none; !important;
+    }
+    div.card.vc.mo:not(.exp):not(.sk) span.email:not(.inline),
+    div.card.sk.mo:not(.exp):not(.vc) span.email:not(.inline),
+    div.card.vc.sk:not(.exp):not(.mo) span.email:not(.inline) {
+        margin-left: 0px;
+    }
+    div.card.vc:not(.exp):not(.sk):not(.mo) span.email:not(.inline),
+    div.card.sk:not(.exp):not(.vc):not(.mo) span.email:not(.inline),
+    div.card.mo:not(.exp):not(.vc):not(.sk) span.email:not(.inline) {
+        margin-left: 0px;
+    }
+}
+@media (min-width: 769px) {
+div.card.vc.mo:not(.exp):not(.sk) span.email:not(.inline),
+div.card.sk.mo:not(.exp):not(.vc) span.email:not(.inline),
+div.card.vc.sk:not(.exp):not(.mo) span.email:not(.inline) {
+    margin-left: -36px;
+}
+}
+div.card.vc.mo.sk:not(.exp) span.email:not(.inline),
+div.card.vc.mo.sk:not(.exp) span.email:not(.ed){
+    margin-left: -56px;
+}
+
+div.card:not(.mo) span.email a.phone,
+div.card:not(.vc) span.email a.vconf,
+div.card:not(.sk) span.email a.skype {
+    display: none;
+}
+div.card.mo.exp span.email a.phone,
+div.card.vc.exp span.email a.vconf,
+div.card.sk.exp span.email a.skype {
+    display: none !important;
+}
+div.card div.row > span.skype-biz,
+div.card div.row > span.phone,
+div.card div.row > span.vconf,
+div.card div.row > span.skype  {
+    display: none;
+}
+div.card.sb div.row > span.skype-biz,
+div.card.mo div.row > span.phone,
+div.card.vc div.row > span.vconf,
+div.card.sk div.row > span.skype  {
+    display: block;
+}

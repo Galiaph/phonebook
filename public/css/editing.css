@@ -1,0 +1,47 @@
+div.card input.form-control {
+    height: 22px;
+    margin-top: -1px;
+    margin-left: -12px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1.42857143;
+    color: #555;
+    background: #fff none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    padding: 0px 12px;
+}
+div.card.prsn input.form-control {
+    /*position: absolute;*/
+}
+span.email input,
+span.skype input,
+span.phone input,
+span.skype-biz input,
+span.vconf input {
+    padding-left: 30px !important;
+}
+.card.prsn span.ed a,
+.card.prsn span.ed > i {
+    position: absolute;
+}
+input.ed ~ span,
+input.ed ~ a,
+input.ed ~ i,
+textarea.ed ~ span {
+    display:none;
+}
+.card:not(.prsn) input.ed + a + span,
+.card:not(.prsn) input.ed + a,
+.card:not(.prsn) textarea.ed + a,
+.card:not(.prsn) textarea.ed + a + span {
+    display: none;
+}
+div#phonebook.edit div.card div.details div.row > span {
+    display: block;
+}
