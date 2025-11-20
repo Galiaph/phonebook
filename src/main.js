@@ -64,9 +64,8 @@ axios.interceptors.response.use(undefined, errorInterceptor)
 //.use(ymapPlugin, settings)
 const app = createApp(App)
 
-app.config.globalProperties.$hostname = 'http://151.0.10.245:5002'
 // app.directive('click-outside', clickOutside)
-
+app.config.globalProperties.hostReg = "http://151.0.10.245:5002"
 app.use(store)
 app.use(router)
 // app.component("font-awesome-icon", FontAwesomeIcon)

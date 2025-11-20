@@ -54,7 +54,7 @@ export default {
         console.log(event)
       },
       async getZones () {
-        const resp = await axios.get(`${this.$hostname}/zones`)
+        const resp = await axios.get(`${this.hostReg}/zones`)
         this.groups = resp.data.map(el => {
           return {
             ...el
@@ -62,7 +62,7 @@ export default {
         })
       },
       async getZoneByID (id) {
-        const resp = await axios.get(`${this.$hostname}/zone/${id}`)
+        const resp = await axios.get(`${this.hostReg}/zone/${id}`)
         this.pb = resp.data.map(el => {
           return {
             ...el
@@ -70,7 +70,7 @@ export default {
         })
       },
       async getLists () {
-        const resp = await axios.get(`${this.$hostname}/lists`)
+        const resp = await axios.get(`${this.hostReg}/lists`)
         this.pb = resp.data
         this.node = this.pb.filter(el => el.zone == this.selecteNode)
         // this.pb = resp.data.map(el => {

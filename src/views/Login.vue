@@ -51,6 +51,7 @@ export default {
     login: async function () {
       const username = this.username
       const password = this.password
+      const host = this.hostReg
 
       if (!username) {
         document.getElementById('nameInput').focus()
@@ -71,7 +72,8 @@ export default {
       try {
         await this.$store.dispatch('login', {
           username,
-          password
+          password,
+          host
         })
         this.$router.push('/')
       } catch (err) {

@@ -54,7 +54,7 @@ export default createStore({
       formData.append('username', user.username)
       formData.append('password', md5(user.password))
       const resp = await axios.post(
-        `${this.$hostname}/token`,
+        `${user.host}/token`,
         formData
       )
       const token = resp.data.token
