@@ -1,7 +1,7 @@
 <template>
   <div class="tab-content col-md-10 col-sm-10 col-lg-10">
     <div id="dp-tab-3" class="tab-pane active" part-id="3">
-      <central-row v-for="(item, idx) in phonebook" :key="item.id" :liType="item.type" :liName="item.name" :liPhone="item.phone" :liComment="item.comment" :isEditRow="isEditRow" :draggable="isEditRow" @dragstart="onDragStart(idx)" @dragover.prevent="onDragOver(idx)" @drop="onDrop(idx)"/>
+      <central-row v-for="(item, idx) in phonebook" :key="item" :id="item.id" :liType="item.type" :liName="item.name" :liPhone="item.phone" :liComment="item.comment" :isEditRow="isEditRow" :draggable="isEditRow" @dragstart="onDragStart(idx)" @dragover.prevent="onDragOver(idx)" @drop="onDrop(idx)" @entEdit="entEditRow($event)" @clDel="clDelRow($event)"/>
     </div>
   </div>
 </template>
@@ -37,13 +37,19 @@ export default {
       if (this.isEditRow)
         this.dragOverIndex = idx
     },
-    onDrop(idx) {
-      if (this.dragStartIndex === null || !this.isEditRow) return
+    onDrop (idx) {
+      if (this.dragStartIndex === null || !this.isEditRow || (this.dragStartIndex == this.dragOverIndex)) return
 
       this.$emit('dragPb', { start: this.dragStartIndex, end: idx })
 
       this.dragStartIndex = null
       this.dragOverIndex = null
+    },
+    entEditRow (ev) {
+      this.$emit('entEditBar', ev)
+    },
+    clDelRow (ev) {
+      this.$emit('clDelBar', ev)
     }
   }
 }

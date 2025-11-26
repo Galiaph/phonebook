@@ -44,9 +44,9 @@
             <li id="actions-dd" :class="list? 'dropdown open' : 'dropdown'" v-show="isEditMode">
               <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" @click="list = !list"><span class="caret"></span></a>
               <ul id="w12" class="dropdown-menu">
-                <li><a type="3" tabindex="-1" @click="add(3)"><i class="glyphicon glyphicon-user"></i> Добавить персону</a></li>
-                <li><a type="2" tabindex="-1" @click="add(2)"><i class="glyphicon glyphicon-th-large"></i> Добавить отдел</a></li>
-                <li><a type="1" tabindex="-1" @click="add(1)"><i class="glyphicon glyphicon-th"></i> Добавить раздел</a></li>
+                <li><a href="" type="3" tabindex="-1" @click.prevent="add(3)"><i class="glyphicon glyphicon-user"></i> Добавить персону</a></li>
+                <li><a href="" type="2" tabindex="-1" @click.prevent="add(2)"><i class="glyphicon glyphicon-th-large"></i> Добавить отдел</a></li>
+                <li><a href="" type="1" tabindex="-1" @click.prevent="add(1)"><i class="glyphicon glyphicon-th"></i> Добавить раздел</a></li>
               </ul>
             </li>
             <li v-show="isRoot" :class="isEditMode? 'active' : ''"><a href="" @click.prevent="clEdit" id="editmode-btn" class="glyphicon glyphicon-pencil btn-lg" title="Turns on and off card editing"></a></li>
