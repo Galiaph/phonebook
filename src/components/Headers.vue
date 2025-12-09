@@ -14,18 +14,18 @@
       <div id="top-navbar-collapse" class="collapse navbar-collapse">
         <ul class="col-sm-5 col-md-4 navbar-nav nav">
           <li class="navbar-form navbar-left" role="search">
-            <input id="searchbox" type="text" class="form-control" placeholder="примеры: мария иванова, секретарь, 2039" value="">
+            <input id="searchbox" type="text" v-model="searchText" @keyup.enter="find" class="form-control" placeholder="примеры: мария иванова, секретарь, 2039">
           </li>
         </ul>
         <ul id="w8" class="navbar-nav hidden-sm hidden-xs nav">
           <li>
-            <a id="search-btn" href="" @click.prevent="test">
+            <a id="search-btn" href="" @click.prevent="find">
               <i class="glyphicon glyphicon-search"></i>
               Поиск
             </a>
           </li>
           <li>
-            <a id="reset-btn" href="" @click.prevent="test">
+            <a id="reset-btn" href="" @click.prevent="reset">
               <i class="glyphicon glyphicon-remove"></i>
               Сброс
             </a>
@@ -46,7 +46,6 @@
               <ul id="w12" class="dropdown-menu">
                 <li><a href="" type="3" tabindex="-1" @click.prevent="add(3)"><i class="glyphicon glyphicon-user"></i> Добавить персону</a></li>
                 <li><a href="" type="2" tabindex="-1" @click.prevent="add(2)"><i class="glyphicon glyphicon-th-large"></i> Добавить отдел</a></li>
-                <li><a href="" type="1" tabindex="-1" @click.prevent="add(1)"><i class="glyphicon glyphicon-th"></i> Добавить раздел</a></li>
               </ul>
             </li>
             <li v-show="isRoot" :class="isEditMode? 'active' : ''"><a href="" @click.prevent="clEdit" id="editmode-btn" class="glyphicon glyphicon-pencil btn-lg" title="Turns on and off card editing"></a></li>
@@ -58,12 +57,12 @@
 </template>
 
 <script>
+// <li><a href="" type="1" tabindex="-1" @click.prevent="add(1)"><i class="glyphicon glyphicon-th"></i> Добавить раздел</a></li>
 export default {
   // eslint-disable-next-line
   name: 'Headers',
   data: () => ({
     searchText: '',
-    searchItem: [{bs_name: 'No results found'}],
     line: false,
     isEditMode: false,
     list: false,
@@ -83,6 +82,13 @@ export default {
     async logout () {
       await this.$store.dispatch('logout')
       this.$router.push('/login')
+    },
+    reset () {
+      this.searchText = ''
+      this.$emit('resetOn', this.searchText)
+    },
+    find () {
+      this.$emit('findOn', this.searchText)
     }
   },
   mounted () {

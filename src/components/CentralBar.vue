@@ -4,6 +4,7 @@
       <central-row v-for="(item, idx) in phonebook" :key="item" :id="item.id" :liType="item.type" :liName="item.name" :liPhone="item.phone" :liComment="item.comment" :isEditRow="isEditRow" :draggable="isEditRow" @dragstart="onDragStart(idx)" @dragover.prevent="onDragOver(idx)" @drop="onDrop(idx)" @entEdit="entEditRow($event)" @clDel="clDelRow($event)"/>
     </div>
   </div>
+  <div class="watermark">Для служебного пользования</div>
 </template>
 
 <script>
@@ -19,6 +20,11 @@ export default {
     dragStartIndex: null,
     dragOverIndex: null
   }),
+  emits: {
+    dragPb: null,
+    entEditBar: null,
+    clDelBar: null
+  }, 
   props: {
     phonebook: {
       type: Array

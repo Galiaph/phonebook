@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <headers @add="addLine($event)" @editOn="changeEdit($event)" />
+    <headers @add="addLine($event)" @editOn="changeEdit($event)" @findOn="finds($event)" @resetOn="resets" />
     <div class="container-fluid" id="main-container">
       <div class="row">
         <div class="col-md-12" id="phonebook">
@@ -16,8 +16,8 @@
 
 <script>
 import Headers from '../components/Headers.vue'
-import LeftBar from '../components/LeftBar.vue'
-import CentralBar from '../components/CentralBar.vue'
+import leftBar from '../components/LeftBar.vue'
+import centralBar from '../components/CentralBar.vue'
 import axios from 'axios'
 // import moment from 'moment'
 
@@ -25,8 +25,8 @@ export default {
   name: 'App',
   components: {
     Headers,
-    LeftBar,
-    CentralBar
+    leftBar,
+    centralBar
   },
   data: () => ({
     selecteNode: 1,
@@ -71,7 +71,7 @@ export default {
             this.getLists()
           }
         } catch (err) {
-          console.error('error in main addLine')
+          console.error('error in main delBar')
         }
       },
       rowSelected (event) {
@@ -87,6 +87,8 @@ export default {
           if (resp.status != 200) {
             console.log('Server not saved change')
             console.log(resp)
+          } else {
+            this.getLists()
           }
         } catch (err) {
           console.error('error in main entBar')
@@ -149,6 +151,14 @@ export default {
         //     ...el
         //   }
         // })
+      },
+      finds (ev) {
+        this.node = this.pb.filter(el => { return el.phone.includes(ev) })
+        this.node = this.node.concat(this.pb.filter(el => { return el.name.toLocaleLowerCase().includes(ev.toLocaleLowerCase()) }))
+        this.node = this.node.concat(this.pb.filter(el => { return el.comment.toLocaleLowerCase().includes(ev.toLocaleLowerCase()) }))
+      },
+      resets () {
+        this.node = this.pb.filter(el => el.zone == this.selecteNode)
       }
     },
     async mounted () {
