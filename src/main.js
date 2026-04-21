@@ -5,6 +5,8 @@ import App from './App.vue'
 import axios from 'axios'
 import router from "./router"
 import store from './store'
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
 
 // import clickOutside from './directives/click-ouside.js'
 
@@ -14,6 +16,36 @@ import store from './store'
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // library.add(fas, far)
+
+const options = {
+  transition: 'Vue-Toastification__fade',
+  maxToasts: 10,
+  newestOnTop: true,
+  position: 'bottom-right',
+  timeout: false,
+  closeOnClick: true,
+  pauseOnFocusLoss: false,
+  pauseOnHover: false,
+  draggable: false,
+  draggablePercent: 0.6,
+  showCloseButtonOnHover: false,
+  hideProgressBar: true,
+  closeButton: false,
+  icon: false,
+  rtl: false,
+  bodyClassName: 'custom-class-1',
+  toastClassName: 'custom-class-2',
+  filterBeforeCreate: (toast, toasts) => {
+    if (toasts.filter(
+      t => (t.content === toast.content)
+    ).length !== 0) {
+      // Returning false discards the toast
+      return false
+    }
+    // You can modify the toast if you want
+    return toast
+  }
+}
 
 const authInterceptor = (config) => {
     const token = localStorage.getItem('token')
@@ -33,7 +65,7 @@ const errorInterceptor = async error => {
         return Promise.reject(error)
     }
 
-    console.log(error.response.status)
+    // console.log(error.response.status)
     // all the other error responses
     switch (error.response.status) {
         case 400:
@@ -68,5 +100,6 @@ const app = createApp(App)
 app.config.globalProperties.hostReg = "http://151.0.10.245:5002"
 app.use(store)
 app.use(router)
+app.use(Toast, options)
 // app.component("font-awesome-icon", FontAwesomeIcon)
 app.mount('#app')

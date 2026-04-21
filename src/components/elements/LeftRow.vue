@@ -14,7 +14,7 @@ export default {
   computed: {
   },
   methods: {
-    select: function () {
+    select () {
       this.$emit('selected')
     }
   }

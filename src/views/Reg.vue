@@ -8,57 +8,49 @@
 					</div>
 					<div class="mycard shadow-lg">
 						<div class="mycard-body p-5">
-							<div :class="classLogin">
-                                <h3 class="fs-3 mycard-title fw-bold mb-4 text-center">Телефонный справочник</h3>
-								<div class="mb-3">
-									<label class="mb-2 text-muted" for="emailInput">Электронная почта</label>
-									<input v-model="email" type="email" placeholder="user@khogov.ru" class="form-control" required id="emailInput" @keydown.enter="login">
-								</div>
-								<div class="mb-3">
-									<label class="mb-2 text-muted" for="passInput">Пароль</label>
-									<input type="password" class="form-control" v-model="password" id="passInput" required @keydown.enter="login">
-                                    <a @click="clForgot">Забыли пароль?</a>
-								</div>
-								<div class="d-flex">
-									<button class="btn btn-primary ms-auto" @click="login" style="margin-top: 10px;">
-										Войти
-									</button>
-                                    <button class="btn btn-primary btn-outline ms-auto" style="margin-top: 10px;" @click="reg">
-										Регистрация
-									</button>
-								</div>
-							</div>
-                            <div id="forgot" :class="classForgot">
-                                <h3 class="fs-3 mycard-title fw-bold mb-4 text-center">Восстановление</h3>
+							<div id="reg" :class="classReg">
+                                <h3 class="fs-3 mycard-title fw-bold mb-4 text-center">Регистрация</h3>
                                 <div class="mb-3">
-									<label class="mb-2 text-muted" for="fEmail">Ваша почта @khogov.ru</label>
-									<input v-model="email2" type="email" placeholder="user@khogov.ru" class="form-control" id="fEmail" @keydown.enter="clVerify">
-								</div>
-                                <div class="d-flex">
-									<button class="btn btn-primary ms-auto" @click="clVerify">
-										Отправить код
-									</button>
-                                    <button class="btn btn-primary btn-outline ms-auto" style="margin-top: 10px;" @click="clForgot">
-										Назад
-									</button>
+                                    <label class="mb-2 text-muted">Фамилия</label>
+                                    <input v-model="firstName" type="text" maxlength="20" class="form-control" id="fnInput">
                                 </div>
-                            </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted">Имя</label>
+                                    <input v-model="lastName" type="text" maxlength="20" class="form-control" id="lnInput">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted">Отчество</label>
+                                    <input v-model="secondName" type="text" maxlength="20" class="form-control" id="snInput">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted">Почта</label>
+                                    <input v-model="email" type="email" placeholder="user@khogov.ru" class="form-control" id="emailInput">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted">Пароль</label>
+                                    <input type="password" class="form-control" v-model="pass_1" id="pass1Input">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted">Подтвердите пароль</label>
+                                    <input type="password" class="form-control" v-model="pass_2" id="pass2Input">
+                                </div>
+                                <div class="d-flex">
+                                    <button class="btn btn-primary ms-auto" @click="clVerify">
+										Получить код
+									</button>
+                                    <button class="btn btn-primary btn-outline ms-auto" style="margin-top: 10px;" @click="goLogin">
+                                        Назад
+                                    </button>
+                                </div>
+							</div>
                             <div id="verify" :class="classVerify">
                                 <h3 class="fs-3 mycard-title fw-bold mb-4 text-center">Подтверждение</h3>
                                 <div class="mb-3">
-									<label class="mb-2 text-muted" for="passInput2">Новый пароль</label>
-									<input type="password" class="form-control" v-model="pass2" id="passInput2" required @keydown.enter="verifyCode">
-								</div>
-                                <div class="mb-3">
-									<label class="mb-2 text-muted" for="passInput3">Подтвердите новый пароль</label>
-									<input type="password" class="form-control" v-model="pass3" id="passInput3" required @keydown.enter="verifyCode">
-								</div>
-                                <div class="mb-3">
-									<label class="mb-2 text-muted" for="codeInput">Код из письма</label>
-									<input type="text" class="form-control text-center" placeholder="000000" v-model="code" id="codeInput" maxlength="6" style="font-size: 24px; letter-spacing: 5px;" required @keydown.enter="verifyCode">
+									<label class="mb-2 text-muted">Код из письма</label>
+									<input type="text" class="form-control text-center" placeholder="000000" v-model="code" id="codeInput" maxlength="6" style="font-size: 24px; letter-spacing: 5px;" required>
 								</div>
                                 <div class="d-flex">
-									<button class="btn btn-primary ms-auto" @click="verifyCode">
+									<button class="btn btn-primary ms-auto" @click="check">
 										Подтвердить
 									</button>
                                 </div>
@@ -81,138 +73,120 @@ import md5 from 'md5'
 
 export default {
   // eslint-disable-next-line
-name: 'Login',
-data: () => ({
+  name: 'Reg',
+  data: () => ({
+    firstName: '',
+    lastName: '',
+    secondName: '',
     email: '',
-    email2: '',
-    password: '',
-    pass2: '',
-    pass3: '',
+    pass_1: '',
+    pass_2: '',
     code: '',
-    isLogin: true,
-    isForgot: false,
+    isReg: true,
     isVerify: false
-}),
-methods: {
-    async login () {
-        const username = this.email
-        const password = this.password
-        const host = this.hostReg
-
+  }),
+  methods: {
+    async clVerify () {
         const toast = useToast()
+        const reg = /^[А-ЯЁ][а-яё]+$/
+        let full_name = ''
 
-        if (!username) {
-            document.getElementById('emailInput').focus()
-            toast.info('Введите логин', { timeout: 3000, toastClassName: '' })
+        if (!this.firstName) {
+            document.getElementById('fnInput').focus()
+            toast.info('Введите фамилию', { timeout: 3000, toastClassName: '' })
             // this.error = 'Введите логин'
             return
         }
 
-        if (!username.match('^[a-zA-Z0-9._-]+@khogov.ru$')) {
+        if (!reg.test(this.firstName)) {
+            toast.info('Фамилия: Кириллица с большой буквы', { timeout: 3000, toastClassName: '' })
+            return
+        }
+
+        full_name = this.firstName
+
+        if (!this.lastName) {
+            document.getElementById('lnInput').focus()
+            toast.info('Введите имя', { timeout: 3000, toastClassName: '' })
+            // this.error = 'Введите логин'
+            return
+        }
+
+        if (!reg.test(this.lastName)) {
+            toast.info('Имя: Кириллица с большой буквы', { timeout: 3000, toastClassName: '' })
+            return
+        }
+
+        full_name += ' ' + this.lastName
+
+        if (this.secondName.length > 0) {
+            if (!reg.test(this.secondName)) {
+                toast.info('Отчество: Кириллица с большой буквы', { timeout: 3000, toastClassName: '' })
+                return
+            } else {
+                full_name += ' ' + this.secondName
+            }
+        }
+
+        if (!this.email.match('^[a-zA-Z0-9._-]+@khogov.ru$')) {
             document.getElementById('emailInput').focus()
             toast.info('Только почта @khogov.ru', { timeout: 3000, toastClassName: '' })
             // this.error = 'Введите логин'
             return
         }
 
-        if (!password) {
-            document.getElementById('passInput').focus()
+        if (!this.pass_1) {
+            document.getElementById('pass1Input').focus()
             toast.info('Введите пароль', { timeout: 3000, toastClassName: '' })
             // this.error = 'Введите пароль'
             return
         }
 
-      // if (this.error) {
-      //   this.error = ''
-      // }
-
-        try {
-            await this.$store.dispatch('login', {
-            username,
-            password,
-            host
-            })
-            this.$router.push('/')
-        } catch (err) {
-            this.$store.commit('auth_error')
-        }
-    },
-    reg () {
-        this.$router.push('/registration')
-    },
-    clForgot () {
-        this.isForgot = !this.isForgot
-        this.isLogin = !this.isLogin
-    },
-    async clVerify () {
-        const username = this.email2
-
-        const toast = useToast()
-
-        if (!username) {
-            document.getElementById('fEmail').focus()
-            toast.info('Введите логин', { timeout: 3000, toastClassName: '' })
-            // this.error = 'Введите логин'
+        if (this.pass_1.length < 8) {
+            document.getElementById('pass1Input').focus()
+            toast.info('Пароль должен быть минимум из 8 символов', { timeout: 3000, toastClassName: '' })
+            // this.error = 'Введите пароль'
             return
         }
 
-        if (!username.match('^[a-zA-Z0-9._-]+@khogov.ru$')) {
-            document.getElementById('fEmail').focus()
-            toast.info('Только почта @khogov.ru', { timeout: 3000, toastClassName: '' })
-            // this.error = 'Введите логин'
+        if (!this.pass_2) {
+            document.getElementById('pass2Input').focus()
+            toast.info('Подтвердите пароль', { timeout: 3000, toastClassName: '' })
+            // this.error = 'Введите пароль'
+            return
+        }
+
+        if (this.pass_1 != this.pass_2) {
+            document.getElementById('pass1Input').focus()
+            toast.info('Пароли не совпадают', { timeout: 3000, toastClassName: '' })
+            // this.error = 'Введите пароль'
             return
         }
 
         try {
-            await axios.post(`${this.hostReg}/forgot`, { 'username': username })
+            await axios.post(`${this.hostReg}/register`, { 'username': this.email, 'password': md5(this.pass_1), 'full_name': full_name })
         } catch (err) {
             if (err.response.status == 404) {
                 toast.info('Ошибка при отправки письма', { timeout: 3000, toastClassName: '' })
+                console.log('Not send verify code')
+            } else if (err.response.status == 400) {
+                toast.info('Возможное совпадение данных', { timeout: 3000, toastClassName: '' })
                 console.log('Not send verify code')
             }
 
             return
         }
 
-        this.isForgot = !this.isForgot
+        this.isReg = !this.isReg
         this.isVerify = !this.isVerify
     },
-    async verifyCode () {
-        const pass2 = this.pass2
-        const pass3 = this.pass3
-        const code = this.code
-
+    goLogin () {
+        this.$router.push('/login')
+    },
+    async check () {
         const toast = useToast()
 
-        if (!pass2) {
-            document.getElementById('passInput2').focus()
-            toast.info('Введите пароль', { timeout: 3000, toastClassName: '' })
-            // this.error = 'Введите пароль'
-            return
-        }
-
-        if (pass2.length < 8) {
-            document.getElementById('passInput2').focus()
-            toast.info('Пароль должен быть минимум из 8 символов', { timeout: 3000, toastClassName: '' })
-            // this.error = 'Введите пароль'
-            return
-        }
-
-        if (!pass3) {
-            document.getElementById('passInput3').focus()
-            toast.info('Подтвердите пароль', { timeout: 3000, toastClassName: '' })
-            // this.error = 'Введите пароль'
-            return
-        }
-
-        if (pass2 != pass3) {
-            document.getElementById('passInput2').focus()
-            toast.info('Пароли не совпадают', { timeout: 3000, toastClassName: '' })
-            // this.error = 'Введите пароль'
-            return
-        }
-
-        if (!code) {
+        if (!this.code) {
             document.getElementById('codeInput').focus()
             toast.info('Введите код из письма', { timeout: 3000, toastClassName: '' })
             // this.error = 'Введите пароль'
@@ -220,14 +194,10 @@ methods: {
         }
 
         try {
-            await axios.post(`${this.hostReg}/verify`, { 'code': code, 'password': md5(pass2) })
+            await axios.post(`${this.hostReg}/regverify`, { 'code': this.code })
+            toast.info('Пользователь успешно создан', { timeout: 3000, toastClassName: '' })
 
             this.$router.replace('/')
-            this.isForgot = false
-            this.isVerify = false
-            this.isLogin = true
-            this.email = this.email2 = this.password = this.pass2 = this.pass3 = this.code = ''
-            toast.info('Пароль успешно изменен', { timeout: 3000, toastClassName: '' })
         } catch (err) {
             if (err.response.status == 401) {
                 toast.info('Не верный код', { timeout: 3000, toastClassName: '' })
@@ -235,18 +205,15 @@ methods: {
             }
         }
     }
-},
-computed: {
-    classLogin () {
-        return { hidden: !this.isLogin && this.isForgot || this.isVerify }
-    },
-    classForgot () {
-        return { hidden: !this.isForgot && this.isLogin || this.isVerify }
+  },
+  computed: {
+    classReg () {
+        return { hidden: !this.isReg && this.isVerify }
     },
     classVerify () {
-        return { hidden: !this.isVerify && this.isForgot || this.isLogin }
+        return { hidden: !this.isVerify && this.isReg }
     }
-}
+  }
 }
 </script>
 
@@ -734,12 +701,67 @@ computed: {
 *,:after,:before {
     box-sizing: border-box;
 }
+.el-date-picker .el-input .el-input__inner,.form-control,.form-group .el-input__inner {
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: #565656;
+    padding: 8px 12px;
+    height: 40px;
+    box-shadow: none
+}
+.el-date-picker .el-input .has-error .el-input__inner,.el-date-picker .el-input .has-success .el-input__inner,.form-group .has-error .el-input__inner,.form-group .has-success .el-input__inner,.has-error .el-date-picker .el-input .el-input__inner,.has-error .form-control,.has-error .form-control:focus,.has-error .form-group .el-input__inner,.has-success .el-date-picker .el-input .el-input__inner,.has-success .form-control,.has-success .form-control:focus,.has-success .form-group .el-input__inner {
+    border-color: #e3e3e3;
+    box-shadow: none
+}
 
+.el-date-picker .el-input .has-success .el-input__inner:focus,.form-group .has-success .el-input__inner:focus,.has-success .el-date-picker .el-input .el-input__inner:focus,.has-success .form-control:focus,.has-success .form-group .el-input__inner:focus {
+    border-color: #87cb16;
+    color: #87cb16
+}
+
+.el-date-picker .el-input .has-error .el-input__inner,.form-group .has-error .el-input__inner,.has-error .el-date-picker .el-input .el-input__inner,.has-error .form-control,.has-error .form-group .el-input__inner {
+    color: #fb404b
+}
+
+.el-date-picker .el-input .has-error .el-input__inner:focus,.form-group .has-error .el-input__inner:focus,.has-error .el-date-picker .el-input .el-input__inner:focus,.has-error .form-control:focus,.has-error .form-group .el-input__inner:focus {
+    border-color: #fb404b
+}
+
+.el-date-picker .el-input .el-input__inner+.form-control-feedback,.form-control+.form-control-feedback,.form-group .el-input__inner+.form-control-feedback {
+    border-radius: 6px;
+    font-size: 14px;
+    margin-top: -7px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    vertical-align: middle
+}
+.card-collapse.collapse,.el-date-picker .el-input .el-input__inner,.form-control,.form-group .el-input__inner,.input-group-addon,.navbar .alert,.tagsinput {
+    transition: all .3s linear
+}
 button,input,optgroup,select,textarea {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit
 }
-
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .175);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
 </style>

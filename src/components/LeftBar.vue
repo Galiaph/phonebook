@@ -23,7 +23,7 @@ export default {
     },
   },
   methods: {
-    select: function (index) {
+    select (index) {
       this.$emit('rowSelect', index)
     }
   }
